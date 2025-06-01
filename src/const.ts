@@ -1,17 +1,16 @@
-export enum AuthorizationStatus {
-  Auth ='AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
-}
+export const LocationPlaces = [{name:'Paris', active: false}, {name:'Cologne', active: false}, {name:'Brussels', active: false}, {name:'Amsterdam', active: true}, {name:'Hamburg', active: false}, {name:'Dusseldorf', active: false}];
 
-export const Setting = {
-  PlacesCount: 32,
-};
 
 export enum AppRoute {
-  Root = '/',
-  Login = '/login',
-  Favorites = '/favorites',
-  Offer = '/offer/:id',
+    Main = '/',
+    Login = '/login',
+    Favorite = '/favorite',
+    Offer = '/offer/:id',
 }
 
+export enum AuthorizationStatus {
+    Auth = 'AUTH',
+    NoAuth = 'NO_AUTH',
+    Unknown = 'UNKNOWN',
+
+}
