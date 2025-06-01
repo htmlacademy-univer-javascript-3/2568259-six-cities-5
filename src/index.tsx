@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
-import { places } from './mocks/offers';
+import App from '@/components/app/app';
+import { Setting } from '@/const';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App places={places}/>
+    <App placesCount={Setting.PlacesCount} />
   </React.StrictMode>
 );
