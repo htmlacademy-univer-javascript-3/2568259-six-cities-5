@@ -1,13 +1,22 @@
-import { OffersProps } from '../../../types/list-offers';
+import { OfferProps } from '../../../types/list-offers';
+
 
 type CardProps = {
-  place: OffersProps;
+  place: OfferProps;
+  onCardHover: (id: string | null) => void;
+};
 
-}
+function PlaceCard({place,onCardHover}:CardProps):JSX.Element {
+  const handleOnMouseEnter = () => onCardHover(place.id);
+  const handleOnMouseLeave = () => onCardHover(null);
 
-function PlaceCard({place}:CardProps):JSX.Element {
   return(
-    <article className="cities__card place-card">
+    <article
+      onMouseEnter = {handleOnMouseEnter}
+      onMouseLeave = {handleOnMouseLeave}
+
+      className="cities__card place-card"
+    >
       {
         place.isPremium &&
         <div className="place-card__mark">
