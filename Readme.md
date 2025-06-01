@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Natalya Zyryanova](https://up.htmlacademy.ru/univer-js3/5/user/2568259).
-* Наставник: `Артем Хрушков`.
+* Студент: [Зырянова Наталья](https://up.htmlacademy.ru/univer-js3/5/user/2568259).
+* Наставник: [Хрушков Артем](https://htmlacademy.ru/profile/id1479859).
 
 ---
 
