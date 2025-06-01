@@ -23,6 +23,7 @@ export default function App(): JSX.Element {
             path={AppRoute.Root}
             element={<MainPage offers={mockOffers}/>}
           />
+
           <Route
             path={AppRoute.Login}
             element={<LoginPage />}
