@@ -1,51 +1,63 @@
 import { useRef, useEffect } from 'react';
-import leaflet from 'leaflet';
+import { Icon, Marker, layerGroup } from 'leaflet';
+import useMap from '@/hooks/use-map/use-map';
+import { City } from '@/types/city/city';
+import { Points, Point } from '@/types/point/point';
 import 'leaflet/dist/leaflet.css';
-import { useMap } from '@/hooks/map';
-import { URL_PIN, URL_PIN_ACTIVE } from '@/const';
-import { Location } from '@/types/location';
-import { Offers, Offer } from '@/types/offer';
 
-export default function Map({
-  location,
-  offers,
-  selectedOffer,
-}: {
-  location: Location;
-  offers: Offers;
-  selectedOffer: Offer | null;
-}) {
+type MapProps = {
+  city: City;
+  points: Points;
+  selectedPoint: Point | undefined;
+};
+
+const defaultCustomIcon = new Icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
+});
+
+const currentCustomIcon = new Icon({
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
+});
+
+function Map(props: MapProps): JSX.Element {
+  const { city, points, selectedPoint } = props;
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, location);
+  const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
-        leaflet
-          .marker(
-            {
-              lat: offer.location.latitude,
-              lng: offer.location.longitude,
-            },
-            {
-              icon:
-                offer.id === selectedOffer?.id
-                  ? leaflet.icon({
-                    iconUrl: URL_PIN_ACTIVE,
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 40],
-                  })
-                  : leaflet.icon({
-                    iconUrl: URL_PIN,
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 40],
-                  }),
-            }
-          )
-          .addTo(map);
-      });
-    }
-  }, [map, offers, selectedOffer]);
+      const markerLayer = layerGroup().addTo(map);
+      points.forEach((point) => {
+        const marker = new Marker({
+          lat: point.lat,
+          lng: point.lng,
+        });
 
-  return <div style={{ width: '100%', height: '100%' }} ref={mapRef}></div>;
+        marker
+          .setIcon(
+            selectedPoint !== undefined && point.title === selectedPoint.title
+              ? currentCustomIcon
+              : defaultCustomIcon
+          )
+          .addTo(markerLayer);
+      });
+
+      return () => {
+        map.removeLayer(markerLayer);
+      };
+    }
+  }, [map, points, selectedPoint]);
+
+  return (
+    <section className="cities__map map" style={{ background: 'none' }}>
+      <div style={{ height: '500px' }} ref={mapRef}></div>
+    </section>
+  );
 }
+
+export default Map;

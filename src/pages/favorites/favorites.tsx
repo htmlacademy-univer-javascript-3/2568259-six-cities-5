@@ -1,27 +1,18 @@
-import Header from '../../components/common/header/header';
-import { OffersProps } from '../../types/list-offers';
-import Footer from '../../components/favorite/footer/footer';
-import FavoriteList from '../../components/favorite/favorite-list/favorite-list';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
+import { OffersListFavorites } from '@/components/offers-lists/offers-lists';
+import { OfferEntity } from '@/types/offer/offer';
 
-type FavoriteProps = {
-  places: OffersProps;
-}
+type FavoritesProps = {
+  offers: OfferEntity[];
+};
 
-function Favorites({places}: FavoriteProps):JSX.Element {
+function Favorites({ offers }: FavoritesProps): JSX.Element {
   return (
     <div className="page">
-      <Header isActive = {false}/>
-
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <FavoriteList places={places}/>
-
-          </section>
-        </div>
-      </main>
-      <Footer/>
+      <Header isLoggedIn />
+      <OffersListFavorites offers={offers} />
+      <Footer />
     </div>
   );
 }
