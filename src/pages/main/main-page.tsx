@@ -1,15 +1,22 @@
 import CardsList from '@/components/cards/cards';
+<<<<<<< HEAD
 import {Offers, Offer} from '@/types/offer';
 import Map from '@/components/map/map';
 import React from 'react';
+=======
+import {Offers} from '@/types/offer';
+>>>>>>> 0d0d908030ab462e0b97ee1a35ab87f3114e7010
 
 type MainPageProps = {
   offers: Offers;
 };
 
 export default function MainPage({offers}: MainPageProps): JSX.Element {
+<<<<<<< HEAD
   const [selectedOffer, setSelectedOffer] = React.useState<Offer | null>(null);
 
+=======
+>>>>>>> 0d0d908030ab462e0b97ee1a35ab87f3114e7010
   return (
     <>
       <meta charSet='utf-8' />
@@ -130,6 +137,7 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
                   </ul>
                 </form>
                 <div className='cities__places-list places__list tabs__content'>
+<<<<<<< HEAD
                   <CardsList
                     offers={offers}
                     // selectedOffer={selectedOffer}
@@ -145,6 +153,13 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
                     selectedOffer={selectedOffer}
                   />
                 </section>
+=======
+                  <CardsList offers={offers}/>
+                </div>
+              </section>
+              <div className='cities__right-section'>
+                <section className='cities__map map'></section>
+>>>>>>> 0d0d908030ab462e0b97ee1a35ab87f3114e7010
               </div>
             </div>
           </div>
