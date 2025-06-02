@@ -1,13 +1,24 @@
-import { OffersProps } from '../../../types/list-offers';
+import { Link } from 'react-router-dom';
+import { OfferProps } from '../../../types/list-offers';
+
 
 type CardProps = {
-  place: OffersProps;
+  place: OfferProps;
+  type: string;
+  onCardHover: (id: string | null) => void;
+};
 
-}
+function PlaceCard({place,onCardHover, type}:CardProps):JSX.Element {
+  const handleOnMouseEnter = () => onCardHover(place.id);
+  const handleOnMouseLeave = () => onCardHover(null);
 
-function PlaceCard({place}:CardProps):JSX.Element {
   return(
-    <article className="cities__card place-card">
+    <article
+      onMouseEnter = {handleOnMouseEnter}
+      onMouseLeave = {handleOnMouseLeave}
+
+      className={`${type}__card place-card`}
+    >
       {
         place.isPremium &&
         <div className="place-card__mark">
@@ -15,10 +26,10 @@ function PlaceCard({place}:CardProps):JSX.Element {
         </div>
       }
 
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+      <div className={`${type}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`/offer/${place.id}`}>
           <img className="place-card__image" src={place.previewImage} width="260" height="200" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

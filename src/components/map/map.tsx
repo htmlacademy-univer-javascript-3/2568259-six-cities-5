@@ -1,63 +1,72 @@
-import { useRef, useEffect } from 'react';
-import { Icon, Marker, layerGroup } from 'leaflet';
-import useMap from '@/hooks/use-map/use-map';
-import { City } from '@/types/city/city';
-import { Points, Point } from '@/types/point/point';
-import 'leaflet/dist/leaflet.css';
+import { useMap } from '../../hooks/useMap';
+import { useEffect, useRef } from 'react';
+import { LocationData, OfferData } from '../../types/offers';
+import { defaulCustomIcon, activeCustomIcon } from '../../const/map';
+import leaflet from 'leaflet';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
-  city: City;
-  points: Points;
-  selectedPoint: Point | undefined;
+  nearestOffers ?:OfferData[];
+  cityLocation: LocationData;
+  hoveredID: string;
+  height: string;
+  width: string;
+  marginBottom: string;
 };
-
-const defaultCustomIcon = new Icon({
-  iconUrl: 'img/pin.svg',
-  iconSize: [27, 39],
-  iconAnchor: [13, 39],
-});
-
-const currentCustomIcon = new Icon({
-  iconUrl: 'img/pin-active.svg',
-  iconSize: [27, 39],
-  iconAnchor: [13, 39],
-});
-
-function Map(props: MapProps): JSX.Element {
-  const { city, points, selectedPoint } = props;
-
-  const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
-
+function Map({
+  nearestOffers ,
+  height = '794px',
+  width = '500px',
+  cityLocation,
+  hoveredID,
+  marginBottom = '',
+}: MapProps): JSX.Element {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const map = useMap(mapRef, cityLocation);
+  const offers = useAppSelector((state) => state.offersList);
   useEffect(() => {
-    if (map) {
-      const markerLayer = layerGroup().addTo(map);
-      points.forEach((point) => {
-        const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng,
-        });
-
-        marker
-          .setIcon(
-            selectedPoint !== undefined && point.title === selectedPoint.title
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(markerLayer);
-      });
-
-      return () => {
-        map.removeLayer(markerLayer);
-      };
+    if (!map) {
+      return;
     }
-  }, [map, points, selectedPoint]);
+    const markers = leaflet.layerGroup();
+    const dataToRender = nearestOffers ?.length ? nearestOffers : offers;
 
+    dataToRender.forEach((offer) => {
+      leaflet
+        .marker(
+          {
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
+          },
+          {
+            icon: offer.id === hoveredID ? activeCustomIcon : defaulCustomIcon,
+          }
+        )
+        .addTo(markers);
+    });
+
+    markers.addTo(map);
+
+    return () => {
+      markers.clearLayers();
+      map.removeLayer(markers);
+    };
+  }, [map,nearestOffers , offers, hoveredID]);
+
+  useEffect(()=>{
+    if(map){
+      map.setView(
+        [offers[0].location.latitude, offers[0].location.longitude],
+        offers[0].location.zoom
+      );
+    }
+  },[map,offers]);
   return (
-    <section className="cities__map map" style={{ background: 'none' }}>
-      <div style={{ height: '500px' }} ref={mapRef}></div>
-    </section>
+    <div
+      style={{ height, width, margin: 'auto', marginBottom }}
+      ref={mapRef}
+    >
+    </div>
   );
 }
-
-export default Map;
+export { Map, type MapProps };

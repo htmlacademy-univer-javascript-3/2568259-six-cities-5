@@ -1,6 +1,9 @@
 import { UserEntity } from '@/types/user/user';
 import { City } from '@/types/city/city';
+<<<<<<< HEAD
 import { ReviewItem } from '@/types/review/review';
+=======
+>>>>>>> aa66e539227ce17a7e472bc059e2265a24b74c48
 
 export type OfferImage = {
   id: number;
@@ -37,6 +40,18 @@ export type OfferDescriptionItem = {
   text: string;
 };
 
+<<<<<<< HEAD
+=======
+export type OfferReview = {
+  id: string;
+  user: UserEntity;
+  stars: 1 | 2 | 3 | 4 | 5;
+  text: string;
+  datetime: string;
+  readableDate: string;
+};
+
+>>>>>>> aa66e539227ce17a7e472bc059e2265a24b74c48
 export type OfferEntity = {
   id: string;
   city: City;
@@ -49,7 +64,11 @@ export type OfferEntity = {
   insideList: OfferInsideItem[];
   host: UserEntity;
   description: OfferDescriptionItem[];
+<<<<<<< HEAD
   reviews: ReviewItem[];
+=======
+  reviews: OfferReview[];
+>>>>>>> aa66e539227ce17a7e472bc059e2265a24b74c48
   latitude: number;
   longitude: number;
 };

@@ -1,31 +1,38 @@
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { setCity } from '@/store/actions';
-import { cities } from '@/constants/cities/cities';
+import { cities } from '../../const/city';
+import { CitiesItem } from '../cities-item/cities-item';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeCity } from '../../store/action';
+import { OfferData } from '../../types/offers';
+import { fillingOfferList } from '../../store/action';
+import { useEffect } from 'react';
 
-function CitiesList(): JSX.Element {
-  const city = useAppSelector((state) => state.city);
+type CitiesListProps = {
+  offers: OfferData[];
+};
+function CitiesList({ offers }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
-
+  const currentCity = useAppSelector((state) => state.city);
+  useEffect(()=>{
+    const offersFiltered = offers.filter(
+      (offer) => offer.city.name === currentCity
+    );
+    dispatch(fillingOfferList(offersFiltered));
+  },[offers, currentCity, dispatch]);
   return (
-    <div className="tabs">
-      <section className="locations container">
-        <ul className="locations__list tabs__list">
-          {Object.entries(cities).map(([cityName, cityObject]) => (
-            <li className="locations__item" key={cityName}>
-              <a
-                className={`locations__item-link tabs__item ${
-                  cityName === city.title ? ' tabs__item--active' : ''
-                }`}
-                onClick={() => dispatch(setCity(cityObject))}
-              >
-                <span>{cityName}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
+    <section className="locations container">
+      <ul className="locations__list tabs__list">
+        {Object.keys(cities).map((city) => (
+          <CitiesItem
+            key={city}
+            city={cities[city]}
+            onClick={() => {
+              dispatch(changeCity(city));
+            }}
+            activeClass={city === currentCity ? 'tabs__item--active' : null}
+          />
+        ))}
+      </ul>
+    </section>
   );
 }
-
-export default CitiesList;
+export { CitiesList };
