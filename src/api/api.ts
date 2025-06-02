@@ -1,18 +1,21 @@
-import axios from 'axios';
-import { ApiConst } from '../components/constants/all-constants.tsx';
-import { getToken } from './token.ts';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { getToken } from '@/utils/user';
+import { BACKEND_URL, REQUEST_TIMEOUT } from './constants';
+import { TOKEN_HEADER } from '@/constants/token';
 
-export const createApi = () => {
+export const createAPI = (): AxiosInstance => {
   const api = axios.create({
-    baseURL: String(ApiConst.baseURL),
-    timeout: Number(ApiConst.RequestTimeout)
+    baseURL: BACKEND_URL,
+    timeout: REQUEST_TIMEOUT,
   });
 
-  api.interceptors.request.use((config) => {
+  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const token = getToken();
-    if (token && config.headers) {
-      config.headers['x-token'] = token;
+
+    if (token !== '') {
+      config.headers[TOKEN_HEADER] = token;
     }
+
     return config;
   });
 
