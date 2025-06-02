@@ -1,11 +1,15 @@
 import { createAction } from '@reduxjs/toolkit';
-import { NameCity, NameSort } from '../const';
-import { OffersProps } from '../types/list-offers';
+import { Offers } from '@/types/offer';
+import { City } from '@/types/city';
+import { AuthorizationStatus, SortType } from '@/const';
+import { Reviews } from '@/types/review';
 
-export const changeCity = createAction<NameCity>('setCity');
+export const loadOffers = createAction<Offers>('offers/loadOffers');
+export const loadReviews = createAction<Reviews>('reviews/loadReviews');
 
-export const changeSort = createAction<NameSort>('setSort');
+export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
+export const setError = createAction<string | null>('setError');
+export const setOffersDataLoadingStatus = createAction<boolean>('setOffersDataLoadingStatus');
 
-export const loadPlaces = createAction<OffersProps>('loadPlaces');
-
-export const setStatus = createAction<boolean>('setStatus');
+export const setCity = createAction<City>('city/setCity');
+export const setSortType = createAction<SortType>('setSortType');

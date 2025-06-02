@@ -1,38 +1,39 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { NameCity,NameSort as NameSort } from '../const';
-import { places } from '../mocks/offers';
-import { OfferProps } from '../types/list-offers';
-import { changeCity, changeSort } from './action';
-import { loadPlaces as loadPlaces } from './action';
-import { setStatus as setPlacesStatus } from './action';
+import { setOffersDataLoadingStatus, loadOffers, setCity, setSortType } from './action';
+import { Offers } from '../types/offer';
+import { DEFAULT_CITY, SortType } from '@/const';
+import { Reviews } from '@/types/review';
+import { City } from '@/types/city';
 
 
-type State = {
-    selectCity: NameCity;
-    places: OfferProps[];
-    selectSort: NameSort;
-    isLoad: boolean;
-}
-const installState: State = {
-  selectCity: NameCity.Amsterdam,
-  places,
-  selectSort: NameSort.Popular,
-  isLoad: false
-
+type StateType = {
+  city: City;
+  offers: Offers;
+  reviews: Reviews;
+  sortType: SortType;
+  isOffersDataLoading: boolean;
 };
 
-export const reducer = createReducer(installState, (builder) => {
+const initialState: StateType = {
+  city: DEFAULT_CITY,
+  offers: [],
+  reviews: [],
+  sortType: SortType.Popular,
+  isOffersDataLoading: false,
+};
+
+export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, action) => {
-      state.selectCity = action.payload;
+    .addCase(setCity, (state, { payload }) => {
+      state.city = payload;
     })
-    .addCase(changeSort, (state, action) => {
-      state.selectSort = action.payload;
+    .addCase(setSortType, (state, { payload }) => {
+      state.sortType = payload;
     })
-    .addCase(loadPlaces, (state, action) => {
-      state.places = action.payload;
+    .addCase(setOffersDataLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     })
-    .addCase(setPlacesStatus, (state, action) => {
-      state.isLoad = action.payload;
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
     });
 });
