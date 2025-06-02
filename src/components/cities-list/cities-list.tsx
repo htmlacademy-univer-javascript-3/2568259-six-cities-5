@@ -1,35 +1,43 @@
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { cities } from '../../const/city';
+import { CitiesItem } from '../cities-item/cities-item';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeCity } from '../../store/action';
+import { OfferData } from '../../types/offers';
+import { fillingOfferList } from '../../store/action';
+import { useEffect } from 'react';
+import { sortingByType } from '../../utils/common';
 
-import {ActionCreator} from "../../store/actions";
-import {selectCities, selectCurrentFilter} from "../../store/selectors";
-
-const CitiesList: React.FunctionComponent = () => {
-  const cities = useSelector(selectCities);
-  const currentFilter = useSelector(selectCurrentFilter);
-  const dispatch = useDispatch();
-
-  return (
-    <ul className="locations__list tabs__list">
-      {cities.map((city, i) =>
-        <li
-          key={`city-${i}`}
-          className="locations__item"
-        >
-          <a
-            className={`locations__item-link tabs__item ${city === currentFilter && `tabs__item--active`}`}
-            href="#"
-            onClick={(evt: React.MouseEvent<HTMLAnchorElement>) => {
-              evt.preventDefault();
-              dispatch(ActionCreator.getCurrentFilter(city));
-            }}
-          >
-            <span>{city}</span>
-          </a>
-        </li>
-      )}
-    </ul>
-  );
+type CitiesListProps = {
+  offers: OfferData[];
 };
 
-export default CitiesList;
+function CitiesList({ offers }: CitiesListProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const currentCity = useAppSelector((state) => state.city);
+  const sortingType = useAppSelector((state) => state.sortingBy);
+
+  useEffect(() => {
+    let offersFiltered = offers.filter(
+      (offer) => offer.city.name === currentCity
+    );
+    offersFiltered = sortingByType(sortingType, offersFiltered);
+    dispatch(fillingOfferList(offersFiltered));
+  }, [offers, currentCity, dispatch, sortingType]);
+  return (
+    <section className="locations container">
+      <ul className="locations__list tabs__list">
+        {Object.keys(cities).map((city) => (
+          <CitiesItem
+            key={city}
+            city={cities[city]}
+            onClick={() => {
+              dispatch(changeCity(city));
+            }}
+            activeClass={city === currentCity ? 'tabs__item--active' : null}
+          />
+        ))}
+      </ul>
+    </section>
+  );
+}
+export { CitiesList };
