@@ -1,36 +1,38 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, fillOffersList, setSortOption, setOffersLoadingStatus } from './action';
-import { CityName, SortingType } from '../const';
-import { OfferPreviewType } from '../types/offer-preview';
+import { NameCity,NameSort as NameSort } from '../const';
+import { places } from '../mocks/offers';
+import { OfferProps } from '../types/list-offers';
+import { changeCity, changeSort } from './action';
+import { loadPlaces as loadPlaces } from './action';
+import { setStatus as setPlacesStatus } from './action';
 
-type StateType = {
-  city: CityName;
-  offers: OfferPreviewType[];
-  sortOption: SortingType;
-  isOffersLoading: boolean;
+
+type State = {
+    selectCity: NameCity;
+    places: OfferProps[];
+    selectSort: NameSort;
+    isLoad: boolean;
+}
+const installState: State = {
+  selectCity: NameCity.Amsterdam,
+  places,
+  selectSort: NameSort.Popular,
+  isLoad: false
+
 };
 
-const initialState: StateType = {
-  city: CityName.Paris,
-  offers: [],
-  sortOption: SortingType.Popular,
-  isOffersLoading: false,
-};
-
-const reducer = createReducer(initialState, (builder) => {
+export const reducer = createReducer(installState, (builder) => {
   builder
     .addCase(changeCity, (state, action) => {
-      state.city = action.payload;
+      state.selectCity = action.payload;
     })
-    .addCase(fillOffersList, (state, action) => {
-      state.offers = action.payload;
+    .addCase(changeSort, (state, action) => {
+      state.selectSort = action.payload;
     })
-    .addCase(setSortOption, (state, action) => {
-      state.sortOption = action.payload;
+    .addCase(loadPlaces, (state, action) => {
+      state.places = action.payload;
     })
-    .addCase(setOffersLoadingStatus, (state, action) => {
-      state.isOffersLoading = action.payload;
+    .addCase(setPlacesStatus, (state, action) => {
+      state.isLoad = action.payload;
     });
 });
-
-export {reducer};

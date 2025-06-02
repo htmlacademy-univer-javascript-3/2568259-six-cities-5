@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { Provider } from 'react-redux';
+import { places } from './mocks/offers';
 import { store } from './store';
-import { cities } from './mocks/cities';
+import { Provider } from 'react-redux';
+import { fetch as fetchPlace } from './store/api-action';
+
+store.dispatch(fetchPlace());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,9 +15,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App
-        cities={cities}
-      />
+      <App places={places} type={'cities'}/>
     </Provider>
+
   </React.StrictMode>
 );

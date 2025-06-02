@@ -1,10 +1,11 @@
 import { createAction } from '@reduxjs/toolkit';
-import { CityName, SortingType } from '../const';
-import { OfferPreviewType } from '../types/offer-preview';
+import { NameCity, NameSort } from '../const';
+import { OffersProps } from '../types/list-offers';
 
-const changeCity = createAction<CityName>('changeCity');
-const fillOffersList = createAction<OfferPreviewType[]>('fillOffersList');
-const setSortOption = createAction<SortingType>('sort');
-const setOffersLoadingStatus = createAction<boolean>('setOffersLoadingStatus');
+export const changeCity = createAction<NameCity>('setCity');
 
-export {changeCity, fillOffersList, setSortOption, setOffersLoadingStatus};
+export const changeSort = createAction<NameSort>('setSort');
+
+export const loadPlaces = createAction<OffersProps>('loadPlaces');
+
+export const setStatus = createAction<boolean>('setStatus');

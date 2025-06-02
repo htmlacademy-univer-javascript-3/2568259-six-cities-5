@@ -1,35 +1,28 @@
-const enum AppRoute {
-  Main = '/',
-  Login = '/login',
-  Favorites = '/favorites',
-  Offer = '/offer',
-  NotFound = '/*'
+export enum AppRoute {
+    Main = '/',
+    Login = '/login',
+    Favorite = '/favorite',
+    Offer = '/offer/:id',
 }
 
-const enum CityName {
-  Paris = 'Paris',
-  Cologne = 'Cologne',
-  Brussels = 'Brussels',
-  Amsterdam = 'Amsterdam',
-  Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf'
+export enum AuthorizationStatus {
+    Auth = 'AUTH',
+    NoAuth = 'NO_AUTH',
+    Unknown = 'UNKNOWN',
 }
 
-const URL_MARKER_DEFAULT = 'img/pin.svg';
-const URL_MARKER_CURRENT = 'img/pin-active.svg';
-
-enum SortingType {
-  Popular = 'Popular',
-  LowToHigh = 'Price: low to high',
-  HighToLow = 'Price: high to low',
-  TopRated = 'Top rated first'
+export enum NameCity {
+    Paris = 'Paris',
+    Cologne = 'Cologne',
+    Brussels = 'Brussels',
+    Amsterdam = 'Amsterdam',
+    Hamburg = 'Hamburg',
+    Dusseldorf = 'Dusseldorf',
 }
 
-const BASE_URL = 'https://14.design.htmlacademy.pro/six-cities';
-const TIMEOUT = 5000;
-
-const enum APIRoute {
-  Offers = '/offers',
-}
-
-export {AppRoute, CityName, URL_MARKER_CURRENT, URL_MARKER_DEFAULT, SortingType, BASE_URL, TIMEOUT, APIRoute};
+export enum NameSort {
+    Popular = 'Popular',
+    LowToHigh = 'Price: low to high',
+    HighToLow = 'Price: high to low',
+    TopRated = 'Top rated first',
+  }
