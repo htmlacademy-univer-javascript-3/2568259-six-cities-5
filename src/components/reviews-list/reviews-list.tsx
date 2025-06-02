@@ -1,26 +1,18 @@
-import React from "react";
+import { ReviewsItem } from '../reviews-item/reviews-item';
+import { ReviewItem } from '../../types/offers';
 
-import {Review} from "../types";
+type ReviewsListProps = {
+  reviews: ReviewItem[];
+};
 
-import ReviewsItem from "../reviews-item/reviews-item";
-
-type Props = {
-  reviews: Review[];
-}
-
-const ReviewsList: React.FunctionComponent<Props> = (props: Props) => {
-  const {reviews} = props;
+function ReviewsList({ reviews }: ReviewsListProps): JSX.Element {
 
   return (
     <ul className="reviews__list">
-      {reviews.map((review, i) =>
-        <ReviewsItem
-          key={`review-${i}`}
-          review={review}
-        />
-      )}
+      {reviews.map((review) => (
+        <ReviewsItem key={review.id} review={review} />
+      ))}
     </ul>
   );
-};
-
-export default ReviewsList;
+}
+export { ReviewsList };

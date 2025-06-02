@@ -1,51 +1,51 @@
-import {Review} from "../components/types";
+import { Review } from '../types/review';
 
 export const reviews: Review[] = [
   {
-    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
-    date: `2020-05-08T14:13:56.569Z`,
-    id: 1,
-    rating: 4.0,
-    user: {
-      avatarUrl: `img/avatar-max.jpg`,
-      id: 1,
-      isPro: false,
-      name: `Max`
-    }
-  }, {
-    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
-    date: `2020-10-01T14:13:56.569Z`,
-    id: 1,
-    rating: 5.0,
-    user: {
-      avatarUrl: `img/avatar-max.jpg`,
-      id: 2,
-      isPro: true,
-      name: `Ivan`
-    }
-  }, {
-    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
-    date: `2019-05-08T19:15:30.569Z`,
-    id: 2,
-    rating: 3.5,
-    user: {
-      avatarUrl: `img/avatar-max.jpg`,
-      id: 3,
-      isPro: false,
-      name: `James`
-    }
-  }, {
-    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
-    date: `2020-09-29T12:19:56.569Z`,
-    id: 3,
-    rating: 4,
-    user: {
-      avatarUrl: `img/avatar-max.jpg`,
-      id: 4.2,
-      isPro: true,
-      name: `Nick`
-    }
-  }
+    'id': '0',
+    'date': '2019-05-08T14:13:56.569Z',
+    'user': {
+      'photo': 'https://i.pinimg.com/736x/e4/02/8f/e4028f41645d54abb21fa619334709ce.jpg',
+      'name': 'Oliver Conner',
+      'isPro': true
+    },
+    'comment': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    'rating': 4
+  },
+
+  {
+    'id': '1',
+    'date': '2019-05-08T14:13:56.569Z',
+    'user': {
+      'photo': 'https://i.pinimg.com/736x/e4/02/8f/e4028f41645d54abb21fa619334709ce.jpg',
+      'name': 'Oliver Conner',
+      'isPro': false
+    },
+    'comment': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    'rating': 5
+  },
+
+  {
+    'id': '2',
+    'date': '2019-05-08T14:13:56.569Z',
+    'user': {
+      'photo': 'https://i.pinimg.com/736x/e4/02/8f/e4028f41645d54abb21fa619334709ce.jpg',
+      'name': 'Oliver Conner',
+      'isPro': true
+    },
+    'comment': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    'rating': 5
+  },
+
+  {
+    'id': '3',
+    'date': '2019-05-08T14:13:56.569Z',
+    'user': {
+      'photo': 'https://i.pinimg.com/736x/e4/02/8f/e4028f41645d54abb21fa619334709ce.jpg',
+      'name': 'Oliver Conner',
+      'isPro': false
+    },
+    'comment': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    'rating': 3
+  },
 ];
-
-

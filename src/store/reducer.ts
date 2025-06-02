@@ -1,20 +1,26 @@
-import {ActionType} from "./const";
-import {Action, State} from "./types";
+import { createReducer } from '@reduxjs/toolkit';
+import { fillingOfferList } from './action';
+import { changeCity } from './action';
+import { OfferData } from '../types/offers';
+import { initialCityOffers } from '../mock/offers';
 
-import {offers} from "../mocks/offers";
-
+type State = {
+  city: string;
+  offersList: OfferData[];
+};
 const initialState: State = {
-  currentFilter: `Amsterdam`,
-  offers
+  city: 'Paris',
+  offersList: initialCityOffers
 };
 
-export const reducer = (state = initialState, action: Action): State => {
-  switch (action.type) {
-    case ActionType.GET_CURRENT_FILTER:
-      return {...state, currentFilter: action.payload};
-    case ActionType.GET_OFFERS:
-      return {...state, offers: action.payload};
-    default:
-      return state;
-  }
-};
+const reducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
+    })
+    .addCase(fillingOfferList, (state, action) => {
+      state.offersList = action.payload;
+    });
+});
+
+export { reducer };

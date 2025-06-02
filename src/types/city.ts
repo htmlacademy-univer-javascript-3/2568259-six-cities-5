@@ -1,6 +1,8 @@
-import { Location } from '@/types/location';
-
 export type City = {
-    name: string;
-    location: Location;
-};
+    'name': string;
+    'point': {
+        'latitude': number;
+        'longitude': number;
+    };
+    'zoom': number;
+}

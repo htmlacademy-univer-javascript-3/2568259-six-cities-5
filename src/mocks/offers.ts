@@ -1,239 +1,118 @@
-<<<<<<< HEAD
-import { Offers } from '@/types/offer';
+import { Offer } from '../types/offer';
 
-export const offers: Offers = [
+export const offers: Offer[] = [
   {
-    'id': '26f49b57-9483-4829-8af0-6ef7a8a8e12f',
-    'title': 'Beautiful & luxurious apartment at great location',
-    'type': 'hotel',
-    'price': 123,
-    'previewImage': 'https://14.design.htmlacademy.pro/static/hotel/19.jpg',
-    'city': {
-      'name': 'Amsterdam',
-      'location': {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
-        'zoom': 13
-      }
-    },
-    'location': {
-      'latitude': 52.3909553943508,
-      'longitude': 4.85309666406198,
-      'zoom': 16
-    },
-    'isFavorite': true,
+    'id': '0',
+    'previewImage': 'img/apartment-01.jpg',
+    'title': 'Beautiful & luxurious studio at great location',
     'isPremium': true,
-    'rating': 3
-  },
-  {
-    'id': 'a8ccdc30-1c66-4e0a-adeb-4f625beffb5c',
-    'title': 'Beautiful & luxurious apartment at great location',
-    'type': 'apartment',
-    'price': 666,
-    'previewImage': 'https://14.design.htmlacademy.pro/static/hotel/13.jpg',
+    'isFavorite': true,
+    'type': 'Apartment',
+    'rating': 4.8,
     'city': {
       'name': 'Amsterdam',
-      'location': {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
-        'zoom': 13
-      }
+      'point': {
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
+      },
+      'zoom': 5,
     },
-    'location': {
-      'latitude': 52.3609553943508,
-      'longitude': 4.85309666406198,
-      'zoom': 16
+    'numOfBedrooms': 3,
+    'numOfGuests': 4,
+    'price': 120,
+    'masterInf': {
+      'photo':'img/avatar-angelina.jpg',
+      'name': 'Angelina',
+      'isPro': true
     },
-    'isFavorite': true,
-    'isPremium': false,
-    'rating': 1.7
+    'nearPlaces': []
   },
+
   {
-    'id': 'f584a085-b265-426b-ab0d-f325726a05f6',
-    'title': 'Wood and stone place',
-    'type': 'room',
-    'price': 951,
+    'id': '1',
     'previewImage': 'img/room.jpg',
+    'title': 'Wood and stone place',
+    'isPremium': false,
+    'isFavorite': false,
+    'type': 'Room',
+    'rating': 3,
     'city': {
       'name': 'Amsterdam',
-      'location': {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
-        'zoom': 13
-      }
+      'point': {
+        'latitude': 52.3609553943508,
+        'longitude': 4.85309666406198,
+      },
+      'zoom': 5,
     },
-    'location': {
-      'latitude': 52.3909553943508,
-      'longitude': 4.929309666406198,
-      'zoom': 16
+    'numOfBedrooms': 3,
+    'numOfGuests': 4,
+    'price': 80,
+    'masterInf': {
+      'photo':'img/avatar-angelina.jpg',
+      'name': 'Angelina',
+      'isPro': true
     },
-    'isFavorite': false,
-    'isPremium': true,
-    'rating': 5
+    'nearPlaces': []
   },
+
+
   {
-    'id': '689174ac-9e8d-48f9-b611-2d4f8bccbe32',
-    'title': 'Canal View Prinsengracht',
-    'type': 'apartment',
-    'price': 169,
+    'id': '2',
     'previewImage': 'img/apartment-02.jpg',
+    'title': 'Canal View Prinsengracht',
+    'isPremium': true,
+    'isFavorite': true,
+    'type': 'Apartment',
+    'rating': 4.8,
     'city': {
       'name': 'Amsterdam',
-      'location': {
-        'latitude': 52.37454,
-        'longitude': 4.897976,
-        'zoom': 13
-      }
+      'point': {
+        'latitude': 52.3909553943508,
+        'longitude': 4.929309666406198,
+      },
+      'zoom': 5,
     },
-    'location': {
-      'latitude': 52.3809553943508,
-      'longitude': 4.939309666406198,
-      'zoom': 16
+    'numOfBedrooms': 3,
+    'numOfGuests': 4,
+    'price': 132,
+    'masterInf': {
+      'photo':'img/avatar-angelina.jpg',
+      'name': 'Angelina',
+      'isPro': true
     },
-    'isFavorite': false,
+    'nearPlaces': []
+  },
+
+
+  {
+    'id': '3',
+    'previewImage': 'img/apartment-03.jpg',
+    'title': 'Nice, cozy, warm big bed apartment',
     'isPremium': true,
-    'rating': 4.3
+    'isFavorite': true,
+    'type': 'Apartment',
+    'rating': 4.8,
+    'city': {
+      'name': 'Amsterdam',
+      'point': {
+        'latitude': 52.3809553943508,
+        'longitude': 4.939309666406198,
+      },
+      'zoom': 5,
+    },
+    'numOfBedrooms': 3,
+    'numOfGuests': 4,
+    'price': 180,
+    'masterInf': {
+      'photo':'img/avatar-angelina.jpg',
+      'name': 'Angelina',
+      'isPro': true
+    },
+    'nearPlaces': []
   },
-=======
-
-import { OffersProps } from '../types/list-offers';
-
-export const places: OffersProps = [
-
-  {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
-      }
-    },
-
-    location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 8
-    },
-
-    isPremium: true,
-    previewImage: 'img/apartment-01.jpg',
-    price: 120,
-    isFavorite: false,
-    rating: 4,
-    title: 'Beautiful &amp; luxurious apartment at great location',
-    type: 'Apartment',
-
-  },
-
-  { id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
-      }
-    },
-
-    location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 8
-    },
-
-    isPremium: false,
-    previewImage: 'img/room.jpg',
-    price: 80,
-    isFavorite: true,
-    rating: 4,
-    title: 'Wood and stone place',
-    type: 'Room'
-  },
-
-  {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
-      }
-    },
-
-    location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 8
-    },
-
-    isPremium: false,
-    previewImage: 'img/apartment-02.jpg',
-    price: 132,
-    isFavorite: false,
-    rating: 4,
-    title: 'Canal View Prinsengracht',
-    type: 'Apartment'
-  },
-
-  {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
-      }
-    },
-
-    location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 8
-    },
-
-    isPremium: true,
-    previewImage: 'img/apartment-03.jpg',
-    price: 180,
-    isFavorite: false,
-    rating: 5,
-    title: 'Nice, cozy, warm big bed apartment',
-    type: 'Apartment'
-  },
-
-  {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
-
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
-      }
-    },
-
-    location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 8
-    },
-
-    isPremium: false,
-    previewImage: 'img/room.jpg',
-    price: 80,
-    isFavorite: true,
-    rating: 4,
-    title: 'Wood and stone place',
-    type: 'Room'
-  },
-
->>>>>>> 0d0d908030ab462e0b97ee1a35ab87f3114e7010
 ];
+
+offers[0].nearPlaces = [offers[1], offers[2], offers[3]];
+offers[1].nearPlaces = [offers[0], offers[2], offers[3]];
+offers[2].nearPlaces = [offers[1], offers[0], offers[3]];
+offers[3].nearPlaces = [offers[1], offers[2], offers[0]];
