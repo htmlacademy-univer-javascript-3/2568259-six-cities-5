@@ -1,14 +1,16 @@
 export type Review = {
-    'id': string;
-    'date': string;
-    'user': Author;
-    'comment': string;
-    'rating': number;
+    id: string;
+    date: string;
+    user: Author;
+    comment: string;
+    rating: number;
   }
 
 export type Author = {
-    'photo': string;
-    'name': string;
-    'isPro': boolean;
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+    email: string;
+    token: string;
 };
 
