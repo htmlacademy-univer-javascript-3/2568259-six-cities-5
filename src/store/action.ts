@@ -1,18 +1,31 @@
-import { createAction } from '@reduxjs/toolkit';
-import { Offers, Offer } from '@/types/offer';
-import { City } from '@/types/city';
-import { AuthorizationStatus, SortType } from '@/const';
-import { Reviews, Review } from '@/types/review';
+import {createAction} from '@reduxjs/toolkit';
+import { LoadingStatus, sortTypes } from '../components/constants/all-constants';
+import { AuthStatus } from '../components/constants/all-constants';
+import { Offer } from '../types/offer';
+import { City } from '../types/city';
+import { Author } from '../types/review';
+import { Review } from '../types/review';
 
-export const loadOffers = createAction<Offers>('offers/loadOffers');
-export const loadReviews = createAction<Reviews>('reviews/loadReviews');
-export const loadOffer = createAction<{offer: Offer; nearestOffers: Offers; reviews: Reviews } | null>('offers/loadOffer');
+export const cityChange = createAction<string>('сityChange');
 
+export const setCity = createAction<City>('setCity');
 
-export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
-export const setUserEmail = createAction<string>('setUserEmail');
-export const setError = createAction<string | null>('setError');
+export const listFilling = createAction('listFilling');
 
-export const setCity = createAction<City>('city/setCity');
-export const setSortType = createAction<SortType>('setSortType');
-export const sendReview = createAction<Review>('review/send');
+export const sortTypeSelect = createAction<sortTypes>('sortTypeSelect');
+
+export const highlightMarker = createAction<{ id: string } | null>('highlightMarker');
+
+export const loadOffers = createAction<Offer[]>('loadOffers');
+
+export const loadOffer = createAction<Offer>('loadOffer');
+
+export const setLoadingStatus = createAction<LoadingStatus>('setLoadingStatus');
+
+export const setAuthStatus = createAction<AuthStatus>('setAuthStatus');
+
+export const setAuthor = createAction<Author | undefined>('setUser');
+
+export const setError = createAction<string>('setError');
+
+export const addReview = createAction<Review>('addReview');

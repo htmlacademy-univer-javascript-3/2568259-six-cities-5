@@ -1,21 +1,15 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { api } from '@/api';
-import { offersReducer } from './offers/reducer';
-import { userReducer } from './user/reducer';
-import { offerReducer } from './offer/reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { reducer } from './reducer';
+import { createApi } from '../api/api';
 
-const rootReducer = combineReducers({
-  offersReducer,
-  userReducer,
-  offerReducer,
-});
+export const api = createApi();
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
-        extraArgument: { api },
+        extraArgument: api,
       },
     }),
 });
