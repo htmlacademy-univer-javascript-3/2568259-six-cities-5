@@ -1,20 +1,9 @@
+import { CityName } from '../const.ts';
+import { LocationType } from './location.ts';
 
-export type Location = {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-}
-
-export type City = {
-    location: Location;
-    name: string;
-}
-
-export const defaultCity = {
-  location: {
-    latitude: 48.86,
-    longitude: 2.35,
-    zoom: 12
-  },
-  name: 'Paris',
+type CityType = {
+  location: LocationType;
+  name: CityName;
 };
+
+export type {CityType};
