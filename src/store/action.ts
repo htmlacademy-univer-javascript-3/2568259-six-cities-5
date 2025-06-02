@@ -1,12 +1,9 @@
-/* eslint-disable arrow-body-style */
 import { createAction } from '@reduxjs/toolkit';
+import { CityName, SortingType } from '../const';
+import { OfferPreviewType } from '../types/offer-preview';
 
-import { OfferData } from '../types/offers';
+const changeCity = createAction<CityName>('changeCity');
+const fillOffersList = createAction<OfferPreviewType[]>('fillOffersList');
+const setSortOption = createAction<SortingType>('sort');
 
-const changeCity = createAction<string>('changeCity'
-);
-
-const fillingOfferList =
-  createAction<OfferData[]>('fillingOfferList');
-
-export { changeCity, fillingOfferList };
+export {changeCity, fillOffersList, setSortOption};

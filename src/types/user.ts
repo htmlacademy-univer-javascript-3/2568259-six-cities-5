@@ -1,5 +1,7 @@
-export type User = {
-    name: string;
-    avatarUrl: string;
-    isPro: boolean;
+type UserType = {
+  avatarUrl: string;
+  isPro: boolean;
+  name: string;
 };
+
+export type {UserType};
