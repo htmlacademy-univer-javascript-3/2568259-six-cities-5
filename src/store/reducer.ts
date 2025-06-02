@@ -1,22 +1,35 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { cities } from '@/constants/cities/cities';
-import getCityOffers from '@/utils/get-offers/get-city-offers';
-import { setCity, setOffers } from './actions';
-import { State } from './types';
+import { setOffersList, setCity, setSortType } from './action';
+import { Offers } from '../types/offer';
+import { offers as mockOffers } from '@/mocks/offers';
+import { DEFAULT_CITY, SortType } from '@/const';
+import { Reviews } from '@/types/review';
+import { City } from '@/types/city';
 
-const initialState: State = {
-  city: cities.Paris,
-  offers: getCityOffers(cities.Paris),
+
+type StateType = {
+  city: City;
+  offers: Offers;
+  reviews: Reviews;
+  sortType: SortType;
 };
 
-const reducer = createReducer(initialState, (builder) =>
-  builder
-    .addCase(setCity, (state, action) => {
-      state.city = action.payload;
-    })
-    .addCase(setOffers, (state, action) => {
-      state.offers = action.payload;
-    })
-);
+const initialState: StateType = {
+  city: DEFAULT_CITY,
+  offers: [],
+  reviews: [],
+  sortType: SortType.Popular,
+};
 
-export default reducer;
+export const reducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setCity, (state, { payload }) => {
+      state.city = payload;
+    })
+    .addCase(setOffersList, (state) => {
+      state.offers = mockOffers;
+    })
+    .addCase(setSortType, (state, { payload }) => {
+      state.sortType = payload;
+    });
+});
