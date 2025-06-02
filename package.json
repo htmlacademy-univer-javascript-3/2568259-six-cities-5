@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.7",
-    "axios": "^1.9.0",
+    "axios": "1.5.1",
     "classnames": "2.3.2",
     "history": "5.3.0",
     "http-status-codes": "2.3.0",
@@ -19,8 +19,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet-async": "1.3.0",
-    "react-redux": "8.1.3",
-    "react-router-dom": "6.16.0"
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.22.2",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@jedmao/redux-mock-store": "3.0.5",
@@ -43,8 +44,8 @@
     "eslint-plugin-react-refresh": "0.4.3",
     "faker": "5.5.3",
     "jsdom": "22.1.0",
-    "typescript": "5.2.2",
-    "vite": "^4.5.14",
+    "typescript": "^5.2.2",
+    "vite": "4.4.11",
     "vitest": "0.34.6"
   },
   "browserslist": {
@@ -58,5 +59,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "* Студент: [Виктория Ануфриева](https://up.htmlacademy.ru/univer-js3/4/user/2345963). * Наставник: `Владимир Ульянов`.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
