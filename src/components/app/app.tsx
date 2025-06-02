@@ -1,41 +1,40 @@
-import { Main } from '../../pages/main/main';
-import { Login } from '../../pages/login/login';
-import { Favorites } from '../../pages/favorites/favorites';
-import { Offer } from '../../pages/offer/offer';
-import { NotFoundScreen } from '../../pages/not-found-screen/not-found-screen';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AuthorizationStatus } from '../../const/auth';
-import { AppRoute } from '../../const/routes';
-import { PrivateRouteComponent } from '../private-route/private-route';
-import { OfferData } from '../../types/offers';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '@/store';
+import Main from '@/pages/main/main';
+import Login from '@/pages/login/login';
+import Favorites from '@/pages/favorites/favorites';
+import Offer from '@/pages/offer/offer';
+import { Error404 } from '@/pages/errors/errors';
+import AuthChecker from '@/components/auth-checker/auth-checker';
+import { OfferEntity } from '@/types/offer/offer';
 
-
-type AppScreenProps = {
-  offers: OfferData[];
+type AppProps = {
+  favoriteOffers: OfferEntity[];
 };
 
-function App({ offers }: AppScreenProps): JSX.Element {
-
+function App({ favoriteOffers }: AppProps): JSX.Element {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Main} element={<Main offers={offers} />} />
-        <Route path={AppRoute.Login} element={<Login />} />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRouteComponent
-              authorizationStatus={AuthorizationStatus.NoAuth}
-            >
-              <Favorites />
-            </PrivateRouteComponent>
-          }
-        />
-        <Route path={AppRoute.Offer} element={<Offer />} />
-        <Route path="*" element={<NotFoundScreen />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/favorites"
+            element={
+              <AuthChecker
+                element={<Favorites offers={favoriteOffers} />}
+                isAuthorized
+              />
+            }
+          />
+          <Route path="/offer/:id" element={<Offer />} />
+          <Route path="/*" element={<Error404 />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
-export { App };
+export default App;

@@ -1,19 +1,10 @@
-import {ActionType} from "./const";
-import {Offer} from "../components/types";
+import { City } from '@/types/city/city';
+import { OfferEntity } from '@/types/offer/offer';
+import { store } from '.';
 
 export type State = {
-  currentFilter: string,
-  offers: Offer[]
+  city: City;
+  offers: OfferEntity[];
 };
 
-type getCurrentFilterAction = {
-  type: typeof ActionType.GET_CURRENT_FILTER,
-  payload: string
-}
-
-type getOffersAction = {
-  type: typeof ActionType.GET_OFFERS,
-  payload: Offer[]
-}
-
-export type Action = getCurrentFilterAction | getOffersAction;
+export type AppDispatch = typeof store.dispatch

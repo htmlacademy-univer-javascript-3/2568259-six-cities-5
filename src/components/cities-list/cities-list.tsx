@@ -1,43 +1,31 @@
-import { cities } from '../../const/city';
-import { CitiesItem } from '../cities-item/cities-item';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
-import { OfferData } from '../../types/offers';
-import { fillingOfferList } from '../../store/action';
-import { useEffect } from 'react';
-import { sortingByType } from '../../utils/common';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { setCity } from '@/store/actions';
+import { cities } from '@/constants/cities/cities';
 
-type CitiesListProps = {
-  offers: OfferData[];
-};
-
-function CitiesList({ offers }: CitiesListProps): JSX.Element {
+function CitiesList(): JSX.Element {
+  const city = useAppSelector((state) => state.city);
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.city);
-  const sortingType = useAppSelector((state) => state.sortingBy);
 
-  useEffect(() => {
-    let offersFiltered = offers.filter(
-      (offer) => offer.city.name === currentCity
-    );
-    offersFiltered = sortingByType(sortingType, offersFiltered);
-    dispatch(fillingOfferList(offersFiltered));
-  }, [offers, currentCity, dispatch, sortingType]);
   return (
-    <section className="locations container">
-      <ul className="locations__list tabs__list">
-        {Object.keys(cities).map((city) => (
-          <CitiesItem
-            key={city}
-            city={cities[city]}
-            onClick={() => {
-              dispatch(changeCity(city));
-            }}
-            activeClass={city === currentCity ? 'tabs__item--active' : null}
-          />
-        ))}
-      </ul>
-    </section>
+    <div className="tabs">
+      <section className="locations container">
+        <ul className="locations__list tabs__list">
+          {Object.entries(cities).map(([cityName, cityObject]) => (
+            <li className="locations__item" key={cityName}>
+              <a
+                className={`locations__item-link tabs__item ${
+                  cityName === city.title ? ' tabs__item--active' : ''
+                }`}
+                onClick={() => dispatch(setCity(cityObject))}
+              >
+                <span>{cityName}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
   );
 }
-export { CitiesList };
+
+export default CitiesList;

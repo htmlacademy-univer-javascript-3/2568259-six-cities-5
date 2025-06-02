@@ -1,33 +1,42 @@
-import React from "react";
+import classNames from 'classnames';
+import OfferCard from '@/components/offer-card/offer-card';
+import { OfferEntity } from '@/types/offer/offer';
+import { Point } from '@/types/point/point';
 
-import {CardType} from "../const";
-import {Offer} from "../types";
+type OffersListProps = {
+  offers: OfferEntity[];
+  type: 'Main' | 'Nearby';
+  onOfferSelect?: (point: Point | undefined) => void;
+};
 
-import OffersItem from "../offers-item/offers-item";
+function OffersList({
+  offers,
+  type,
+  onOfferSelect,
+}: OffersListProps): JSX.Element {
+  let containerClassName: string;
 
-type Props = {
-  offers: Offer[];
-  type: CardType;
-}
-
-const OffersList: React.FunctionComponent<Props> = (props: Props) => {
-  const {offers, type} = props;
-  // eslint-disable-next-line
-  const [activeID, setActiveID] = React.useState(null);
+  switch (type) {
+    case 'Main':
+      containerClassName = 'cities__places-list tabs__content';
+      break;
+    case 'Nearby':
+      containerClassName = 'near-places__list';
+      break;
+  }
 
   return (
-    <React.Fragment>
-      {offers.map((offer, i) =>
-        <OffersItem
-          key={`offer-${i}`}
+    <div className={classNames(containerClassName, 'places__list')}>
+      {offers.map((offer) => (
+        <OfferCard
           offer={offer}
+          key={offer.id}
+          onOfferSelect={onOfferSelect}
           type={type}
-          onMouseEnter={() => setActiveID(offer.id)}
-          onMouseLeave={() => setActiveID(null)}
         />
-      )}
-    </React.Fragment>
+      ))}
+    </div>
   );
-};
+}
 
 export default OffersList;
