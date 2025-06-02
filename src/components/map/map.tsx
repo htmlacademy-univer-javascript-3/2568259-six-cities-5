@@ -1,58 +1,44 @@
-import {useRef, useEffect} from 'react';
-import {Icon, Marker, layerGroup} from 'leaflet';
-import useMap from '@/hooks/map';
-import { Offer, Offers } from '@/types/offer';
-import {URL_PIN, URL_PIN_ACTIVE} from '@/const';
+import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Location } from '@/types/location';
+import { useRef, useEffect } from 'react';
+import { OfferPreviewType } from '../../types/offer-preview';
+import { currentCustomIcon, defaultCustomIcon } from './pin';
+import useMap from '../../hooks/hooks';
 
 type MapProps = {
-    location: Location;
-    offers: Offers;
-    selectedOffer: Offer | undefined;
-  };
+  offers: OfferPreviewType[];
+  city: OfferPreviewType['city'];
+  activeOffer: OfferPreviewType['id'] | null;
+}
 
-const defaultCustomIcon = new Icon({
-  iconUrl: URL_PIN,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
-const currentCustomIcon = new Icon({
-  iconUrl: URL_PIN_ACTIVE,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
-export default function Map({ location, offers, selectedOffer }: MapProps): JSX.Element {
+const Map = ({offers, city, activeOffer}: MapProps): JSX.Element => {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, location);
+  const map = useMap(mapRef, city);
+  const markersRef = useRef<leaflet.Marker[]>([]);
 
   useEffect(() => {
     if (map) {
-      const markerLayer = layerGroup().addTo(map);
       offers.forEach((offer) => {
-        if (offer && offer.location) {
-          const marker = new Marker({
+        const marker = leaflet
+          .marker({
             lat: offer.location.latitude,
-            lng: offer.location.longitude
-          });
-
-          marker
-            .setIcon(
-              selectedOffer !== undefined && offer.id === selectedOffer.id
-                ? currentCustomIcon
-                : defaultCustomIcon
-            )
-            .addTo(markerLayer);
-        }
+            lng: offer.location.longitude,
+          }, {
+            icon: offer.id === activeOffer ? currentCustomIcon : defaultCustomIcon,
+          })
+          .addTo(map);
+        markersRef.current.push(marker);
       });
-
       return () => {
-        map.removeLayer(markerLayer);
+        markersRef.current.forEach((marker) => map.removeLayer(marker));
+        markersRef.current = [];
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, activeOffer]);
 
-  return <div style={{ width: '100%', height: '100%' }} ref={mapRef}></div>;
-}
+  return (
+    <div style={{width: '100%', height: '100%'}} ref={mapRef}></div>
+  );
+};
+
+export default Map;

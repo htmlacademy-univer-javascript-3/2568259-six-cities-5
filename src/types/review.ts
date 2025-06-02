@@ -1,11 +1,11 @@
-import { User } from '@/types/user';
+import { UserType } from './user';
 
-export type Review = {
-    id: string;
-    date: string;
-    user: User;
-    comment: string;
-    rating: number;
+type ReviewType = {
+  id: string;
+  date: string;
+  user: UserType;
+  comment: string;
+  rating: number;
 };
 
-export type Reviews = Review[];
+export type {ReviewType};

@@ -1,50 +1,46 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Main from '../../pages/main/main';
-import { ListProps } from '../main/list-places/list-places';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import Login from '../../pages/login/login';
-import Favorites from '../../pages/favorites/favorites';
-import Offer from '../../pages/offer/offer';
-import NotFound from '../../pages/not-found/not-found';
-import PrivateRoute from '../common/private-route/private-route';
-import { comments } from '../../mocks/comments';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import MainPage from '../main-page/main-page';
+import FavoritesPage from '../favorites-page/favorites-page';
+import LoginPage from '../login-page/login-page';
+import OfferPage from '../offer-page/offer-page';
+import ErrorPage from '../error-page/error-page';
+import PrivateRoute from '../private-route/private-route';
+import { CityType } from '../../types/city';
 
-
-function App({places}: ListProps): JSX.Element {
-  const favoriteplaces = places.filter((place) => place.isFavorite);
-  return(
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path = {AppRoute.Main}
-          element = {<Main />}
-        />
-        <Route
-          path= {AppRoute.Login}
-          element = {<Login/>}
-        />
-        <Route
-          path= {AppRoute.Favorite}
-          element = {
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
-            >
-              <Favorites places = {favoriteplaces}/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path= {AppRoute.Offer}
-          element = {<Offer review={comments}/>}
-        />
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
-      </Routes>
-    </BrowserRouter>
-
-  );
+type AppScreenProps = {
+  cities: CityType[];
 }
+
+const App = ({cities}: AppScreenProps): JSX.Element => (
+  <BrowserRouter>
+    <Routes>
+      <Route
+        path = {AppRoute.Main}
+        element = {<MainPage cities={cities}/>}
+      />
+      <Route
+        path = {AppRoute.Favorites}
+        element = {
+          <PrivateRoute authorizationStatus>
+            <FavoritesPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path = {AppRoute.Login}
+        element ={<LoginPage />}
+      />
+      <Route
+        path = {`${AppRoute.Offer}/:id`}
+        element ={<OfferPage />}
+      />
+      <Route
+        path = "*"
+        element ={<ErrorPage />}
+      />
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;

@@ -1,8 +1,9 @@
-import { Location } from '@/types/location';
+import { CityName } from '../const.ts';
+import { LocationType } from './location.ts';
 
-export type City = {
-    name: string;
-    location: Location;
+type CityType = {
+  location: LocationType;
+  name: CityName;
 };
 
-export type Cities = City[];
+export type {CityType};

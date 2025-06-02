@@ -1,17 +1,12 @@
-import { City } from '@/types/city';
-import { Location } from '@/types/location';
+import { OfferPreviewType } from './offer-preview';
+import { UserType } from './user';
 
-export type Offer = {
-    id: string;
-    title: string;
-    type: string;
-    price: number;
-    city: City;
-    location: Location;
-    isFavorite: boolean;
-    isPremium: boolean;
-    rating: number;
-    previewImage: string;
+type OfferType = OfferPreviewType & {
+  bedrooms: number;
+  description: string;
+  host: UserType;
+  images: string[];
+  maxAdults: number;
 };
 
-export type Offers = Offer[];
+export type {OfferType};

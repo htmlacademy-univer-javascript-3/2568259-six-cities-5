@@ -1,28 +1,31 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { NameCity,NameSort as NameSort } from '../const';
-import { places } from '../mocks/offers';
-import { OfferProps } from '../types/list-offers';
-import { changeCity, changeSort } from './action';
+import { changeCity, fillOffersList, setSortOption } from './action';
+import { CityName, SortingType } from '../const';
+import { OfferPreviewType } from '../types/offer-preview';
 
-
-type State = {
-    selectCity: NameCity;
-    places: OfferProps[];
-    selectSort: NameSort;
-}
-const installState: State = {
-  selectCity: NameCity.Amsterdam,
-  places,
-  selectSort: NameSort.Popular
-
+type StateType = {
+  city: CityName;
+  offers: OfferPreviewType[];
+  sortOption: SortingType;
 };
 
-export const reducer = createReducer(installState, (builder) => {
+const initialState: StateType = {
+  city: CityName.Paris,
+  offers: [],
+  sortOption: SortingType.Popular,
+};
+
+const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCity, (state, action) => {
-      state.selectCity = action.payload;
+      state.city = action.payload;
     })
-    .addCase(changeSort, (state, action) => {
-      state.selectSort = action.payload;
+    .addCase(fillOffersList, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(setSortOption, (state, action) => {
+      state.sortOption = action.payload;
     });
 });
+
+export {reducer};

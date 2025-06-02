@@ -1,28 +1,28 @@
-export enum AppRoute {
-    Main = '/',
-    Login = '/login',
-    Favorite = '/favorite',
-    Offer = '/offer/:id',
+const enum AppRoute {
+  Main = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer',
+  NotFound = '/*'
 }
 
-export enum AuthorizationStatus {
-    Auth = 'AUTH',
-    NoAuth = 'NO_AUTH',
-    Unknown = 'UNKNOWN',
+const enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf'
 }
 
-export enum NameCity {
-    Paris = 'Paris',
-    Cologne = 'Cologne',
-    Brussels = 'Brussels',
-    Amsterdam = 'Amsterdam',
-    Hamburg = 'Hamburg',
-    Dusseldorf = 'Dusseldorf',
+const URL_MARKER_DEFAULT = 'img/pin.svg';
+const URL_MARKER_CURRENT = 'img/pin-active.svg';
+
+enum SortingType {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRated = 'Top rated first'
 }
 
-export enum NameSort {
-    Popular = 'Popular',
-    LowToHigh = 'Price: low to high',
-    HighToLow = 'Price: high to low',
-    TopRated = 'Top rated first',
-  }
+export {AppRoute, CityName, URL_MARKER_CURRENT, URL_MARKER_DEFAULT, SortingType};
