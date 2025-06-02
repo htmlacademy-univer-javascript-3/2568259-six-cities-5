@@ -1,17 +1,28 @@
-import { City } from '@/types/city';
-import { Location } from '@/types/location';
+import { City, Location } from './city';
+import { Author, Review } from './review';
 
 export type Offer = {
-    id: string;
-    title: string;
-    type: string;
-    price: number;
     city: City;
-    location: Location;
+    id: string;
     isFavorite: boolean;
     isPremium: boolean;
-    rating: number;
+    location: Location;
     previewImage: string;
+    price: number;
+    rating: number;
+    title: string;
+    type: string;
+
+    reviews?: Review[];
+    nearPlaces?: Offers;
+    images: string[];
+    description?: string;
+    bedrooms?: number;
+    goods?: string[];
+    host?: Author;
+    maxAdults?: number;
+    status?: number;
 };
 
-export type Offers = Offer[] | undefined;
+export type Offers = Offer[]
+

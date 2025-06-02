@@ -1,16 +1,16 @@
-import { User } from '@/types/user';
-
 export type Review = {
     id: string;
     date: string;
-    user: User;
+    user: Author;
     comment: string;
     rating: number;
+  }
+
+export type Author = {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+    email: string;
+    token: string;
 };
 
-export type Reviews = Review[];
-
-export type ReviewForm = {
-    review: string;
-    rating: number;
-};
