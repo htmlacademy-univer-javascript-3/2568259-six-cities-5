@@ -1,31 +1,48 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, fillOffersList, setSortOption } from './action';
-import { CityName, SortingType } from '../const';
-import { OfferPreviewType } from '../types/offer-preview';
+import { loadOffers, cityChange, sortTypeSelect, highlightMarker, setLoadingStatus, setCity } from './action';
+import { LoadingStatus, sortTypes } from '../components/constants/all-constants';
+import { City, defaultCity } from '../types/city';
+import { Offer } from '../types/offer';
 
 type StateType = {
-  city: CityName;
-  offers: OfferPreviewType[];
-  sortOption: SortingType;
+  city: City;
+  offers: Offer[];
+  sortType: sortTypes;
+  loadingStatus: LoadingStatus;
+  selectedMarker: { id: string } | null;
 };
 
 const initialState: StateType = {
-  city: CityName.Paris,
+  city: defaultCity,
   offers: [],
-  sortOption: SortingType.Popular,
+  sortType: sortTypes.Popular,
+  loadingStatus: LoadingStatus.Success,
+  selectedMarker: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, action) => {
-      state.city = action.payload;
+    .addCase(cityChange, (state, { payload }) => {
+      state.city = {
+        ...state.city,
+        name: payload,
+      };
     })
-    .addCase(fillOffersList, (state, action) => {
-      state.offers = action.payload;
+    .addCase(loadOffers, (state, { payload }) => {
+      state.offers = payload;
     })
-    .addCase(setSortOption, (state, action) => {
-      state.sortOption = action.payload;
+    .addCase(setCity, (state, { payload }) => {
+      state.city = payload;
+    })
+    .addCase(setLoadingStatus, (state, { payload }) => {
+      state.loadingStatus = payload;
+    })
+    .addCase(sortTypeSelect, (state, { payload }) => {
+      state.sortType = payload;
+    })
+    .addCase(highlightMarker, (state, { payload }) => {
+      state.selectedMarker = payload;
     });
 });
 
-export {reducer};
+export { reducer };
