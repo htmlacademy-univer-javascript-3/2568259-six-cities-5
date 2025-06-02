@@ -1,76 +1,62 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { NameCity,NameSort,AuthorizationStatus, } from '../const';
-import { places } from '../mocks/offers';
-import { OfferProps } from '../types/list-offers';
-import { changeCity, changeSort, requireAuth,isOfferLoad,setOffer,isReviewsLoad,setReviews,setNearby,isNearbyLoad} from './action';
-import { loadPlaces } from './action';
-import { setStatus } from './action';
-import { OfferAllInfo } from '../types/list-offers';
-import { Comments } from '../types/comment';
+import { loadOffer, loadOffers, requireAuthorization, sendReview, setCity, setSortType, setUserEmail } from './action';
+import { Offers, Offer } from '../types/offer';
+import { AuthorizationStatus, DEFAULT_CITY, SortType } from '@/const';
+import { Reviews } from '@/types/review';
+import { City } from '@/types/city';
 
 
-type State = {
-    selectCity: NameCity;
-    places: OfferProps[];
-    selectSort: NameSort;
-    isLoad: boolean;
-    authStat: AuthorizationStatus;
-    isOfferLoading: boolean;
-    offer: OfferAllInfo | null;
-    isReviewsLoad: boolean;
-    comments: Comments;
-    isNearbyLoad: boolean;
-    nearby: OfferProps[];
-}
-const installState: State = {
-  selectCity: NameCity.Amsterdam,
-  places,
-  selectSort: NameSort.Popular,
-  isLoad: false,
-  authStat: AuthorizationStatus.Unknown,
-  isOfferLoading: false,
-  offer: null,
-  isReviewsLoad: false,
-  comments: [],
-  isNearbyLoad: false,
-  nearby: [],
+type StateType = {
+  city: City;
+  offers: Offers | undefined;
+  reviews: Reviews;
+  sortType: SortType;
+  authorizationStatus: AuthorizationStatus;
+  userEmail: string;
+  userToken: string;
+  offer: {offer: Offer; nearbyOffers: Offers; reviews: Reviews } | undefined | null;
 };
 
+const initialState: StateType = {
+  city: DEFAULT_CITY,
+  offers: undefined,
+  reviews: [],
+  sortType: SortType.Popular,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userEmail: '',
+  userToken: '',
+  offer: undefined,
+};
 
-export const reducer = createReducer(installState, (builder) => {
+export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeCity, (state, action) => {
-      state.selectCity = action.payload;
+    .addCase(setCity, (state, { payload }) => {
+      state.city = payload;
     })
-    .addCase(changeSort, (state, action) => {
-      state.selectSort = action.payload;
+    .addCase(setSortType, (state, { payload }) => {
+      state.sortType = payload;
     })
-    .addCase(loadPlaces, (state, action) => {
-      state.places = action.payload;
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
     })
-    .addCase(setStatus, (state, action) => {
-      state.isLoad = action.payload;
+    .addCase(setUserEmail, (state, { payload }) => {
+      state.userEmail = payload;
     })
-    .addCase(requireAuth, (state,action) => {
-      state.authStat = action.payload;
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     })
-    .addCase(isOfferLoad, (state, action) => {
-      state.isOfferLoading = action.payload;
+    .addCase(loadOffer, (state, { payload }) => {
+      if (payload === null){
+        state.offer = null;
+      } else {
+        state.offer = {
+          offer: payload.offer,
+          nearbyOffers: payload.nearestOffers,
+          reviews: payload.reviews
+        };
+      }
     })
-    .addCase(setOffer, (state, action) => {
-      state.offer = action.payload;
-    })
-    .addCase(isReviewsLoad, (state, action) => {
-      state.isReviewsLoad = action.payload;
-    })
-    .addCase(setReviews, (state, action) => {
-      state.comments = action.payload;
-    })
-    .addCase(isNearbyLoad, (state, action) => {
-      state.isNearbyLoad = action.payload;
-    })
-    .addCase(setNearby, (state, action) => {
-      state.nearby = action.payload;
+    .addCase(sendReview, (state, { payload }) => {
+      state.offer?.reviews.push(payload);
     });
-
 });

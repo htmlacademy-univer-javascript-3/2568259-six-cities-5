@@ -1,79 +1,57 @@
-import { Route, Routes } from 'react-router-dom';
-import Main from '../../pages/main/main';
-import Login from '../../pages/login/login';
-import Favorites from '../../pages/favorites/favorites';
-import Offer from '../../pages/offer/offer';
-import NotFound from '../../pages/not-found/not-found';
-import PrivateRoute from '../common/private-route/private-route';
-import { useAppSelector } from '../../hooks/redux';
-import Spinner from '../common/spinner/spinner';
-import HistoryRouter from './history-router';
-import { history } from '../../store';
-import { Navigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const.ts';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {HelmetProvider} from 'react-helmet-async';
+import { AppRoute, AuthorizationStatus } from '@/const';
+import PrivateRoute from '@/components/private/private-route';
+import LoginPage from '@/pages/login/login-page';
+import MainPage from '@/pages/main/main-page';
+import OfferPage from '@/pages/offer/offer-page';
+import FavoritesPage from '@/pages/favorites/favorites-page';
+import NotFoundPage from '@/pages/not-found/not-found-page';
+import { useAppSelector } from '@/hooks';
+import SpinnerPage from '@/pages/spinner/spinner-page';
 
-type RedirectRouteProps = {
-  children: JSX.Element;
-  authStatus: AuthorizationStatus;
-}
 
-function App(): JSX.Element {
+export default function App(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
 
-  const places = useAppSelector((state) => state.places);
-  const isLoad = useAppSelector((state) => state.isLoad);
-  const AuthStatus = useAppSelector((state) => state.authStat);
-
-  const RedirectRoute = ({ children, authStatus }: RedirectRouteProps): JSX.Element => authStatus === AuthorizationStatus.Auth ? <Navigate to={AppRoute.Main}/> : children;
-
-  if (isLoad) {
+  if (offers === undefined) {
     return (
-      <Spinner />
+      <SpinnerPage />
     );
   }
 
-  const favoriteplaces = places.filter((place) => place.isFavorite);
-  return(
-    <HistoryRouter history={history}>
-      <Routes>
-        <Route
-          index
-          path = {AppRoute.Main}
-          element = {<Main />}
-        />
-        <Route
-          path= {AppRoute.Login}
-          element = {
-            <RedirectRoute authStatus={AuthStatus}>
-              <Login/>
-            </RedirectRoute>
-          }
-        />
-        <Route
-          path= {AppRoute.Favorite}
-          element = {
-            <PrivateRoute
-              authorizationStatus={AuthStatus}
-            >
-              <Favorites places = {favoriteplaces}/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path= {AppRoute.Offer}
-          element = {<Offer/>}
-        />
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
-      </Routes>
-    </HistoryRouter>
-
-
+  return (
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={AppRoute.Root}
+            element={<MainPage />}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={<LoginPage />}
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute
+                authorizationStatus={AuthorizationStatus.Auth}
+              >
+                <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={`${AppRoute.Offer}/:id`}
+            element={<OfferPage />}
+          />
+          <Route
+            path='*'
+            element={<NotFoundPage />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
-
-
-export default App;
-
-

@@ -1,32 +1,18 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AppRoute, NameCity, NameSort } from '../const';
-import { AuthorizationStatus } from '../const';
-import { Comments } from '../types/comment';
-import { OffersProps,OfferAllInfo } from '../types/list-offers';
+import { Offers, Offer } from '@/types/offer';
+import { City } from '@/types/city';
+import { AuthorizationStatus, SortType } from '@/const';
+import { Reviews, Review } from '@/types/review';
+
+export const loadOffers = createAction<Offers>('offers/loadOffers');
+export const loadReviews = createAction<Reviews>('reviews/loadReviews');
+export const loadOffer = createAction<{offer: Offer; nearestOffers: Offers; reviews: Reviews } | null>('offers/loadOffer');
 
 
-export const changeCity = createAction<NameCity>('setCity');
+export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
+export const setUserEmail = createAction<string>('setUserEmail');
+export const setError = createAction<string | null>('setError');
 
-export const changeSort = createAction<NameSort>('setSort');
-
-export const loadPlaces = createAction<OffersProps>('loadPlaces');
-
-export const setStatus = createAction<boolean>('setStatus');
-
-export const requireAuth = createAction<AuthorizationStatus>('requireAuth');
-
-export const redirect = createAction<AppRoute>('redirect');
-
-export const isOfferLoad = createAction<boolean>('isOfferLoading');
-
-export const setOffer = createAction<OfferAllInfo>('setOffer');
-
-export const isReviewsLoad = createAction<boolean>('isReviewsLoad');
-
-export const setReviews = createAction<Comments>('setReviews');
-
-export const isNearbyLoad = createAction<boolean>('isNearbyLoad');
-
-export const setNearby = createAction<OffersProps>('setNearby');
-
-
+export const setCity = createAction<City>('city/setCity');
+export const setSortType = createAction<SortType>('setSortType');
+export const sendReview = createAction<Review>('review/send');
