@@ -29,6 +29,7 @@ git remote add academy git@github.com:htmlacademy-univer-javascript-3/2568259-si
 
 Когда вы обновили `master`, создайте ветку для нового задания:
 
+
 ```
 git checkout -b module2-task1
 ```
