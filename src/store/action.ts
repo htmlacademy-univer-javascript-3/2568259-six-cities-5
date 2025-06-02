@@ -1,31 +1,32 @@
-import {createAction} from '@reduxjs/toolkit';
-import { LoadingStatus, sortTypes } from '../components/constants/all-constants';
-import { AuthStatus } from '../components/constants/all-constants';
-import { Offer } from '../types/offer';
-import { City } from '../types/city';
-import { Author } from '../types/review';
-import { Review } from '../types/review';
+import { createAction } from '@reduxjs/toolkit';
+import { AppRoute, NameCity, NameSort } from '../const';
+import { AuthorizationStatus } from '../const';
+import { Comments } from '../types/comment';
+import { OffersProps,OfferAllInfo } from '../types/list-offers';
 
-export const cityChange = createAction<string>('сityChange');
 
-export const setCity = createAction<City>('setCity');
+export const changeCity = createAction<NameCity>('setCity');
 
-export const listFilling = createAction('listFilling');
+export const changeSort = createAction<NameSort>('setSort');
 
-export const sortTypeSelect = createAction<sortTypes>('sortTypeSelect');
+export const loadPlaces = createAction<OffersProps>('loadPlaces');
 
-export const highlightMarker = createAction<{ id: string } | null>('highlightMarker');
+export const setStatus = createAction<boolean>('setStatus');
 
-export const loadOffers = createAction<Offer[]>('loadOffers');
+export const requireAuth = createAction<AuthorizationStatus>('requireAuth');
 
-export const loadOffer = createAction<Offer>('loadOffer');
+export const redirect = createAction<AppRoute>('redirect');
 
-export const setLoadingStatus = createAction<LoadingStatus>('setLoadingStatus');
+export const isOfferLoad = createAction<boolean>('isOfferLoading');
 
-export const setAuthStatus = createAction<AuthStatus>('setAuthStatus');
+export const setOffer = createAction<OfferAllInfo>('setOffer');
 
-export const setAuthor = createAction<Author | undefined>('setUser');
+export const isReviewsLoad = createAction<boolean>('isReviewsLoad');
 
-export const setError = createAction<string>('setError');
+export const setReviews = createAction<Comments>('setReviews');
 
-export const addReview = createAction<Review>('addReview');
+export const isNearbyLoad = createAction<boolean>('isNearbyLoad');
+
+export const setNearby = createAction<OffersProps>('setNearby');
+
+

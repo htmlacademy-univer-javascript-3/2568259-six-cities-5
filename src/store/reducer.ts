@@ -1,72 +1,76 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { loadOffers, cityChange, sortTypeSelect, highlightMarker, setLoadingStatus, setCity, setAuthStatus, setAuthor, loadOffer, setError, addReview } from './action';
-import { AuthStatus, LoadingStatus, sortTypes } from '../components/constants/all-constants';
-import { City, defaultCity } from '../types/city';
-import { Offer } from '../types/offer';
-import { Author } from '../types/review';
+import { NameCity,NameSort,AuthorizationStatus, } from '../const';
+import { places } from '../mocks/offers';
+import { OfferProps } from '../types/list-offers';
+import { changeCity, changeSort, requireAuth,isOfferLoad,setOffer,isReviewsLoad,setReviews,setNearby,isNearbyLoad} from './action';
+import { loadPlaces } from './action';
+import { setStatus } from './action';
+import { OfferAllInfo } from '../types/list-offers';
+import { Comments } from '../types/comment';
 
-type StateType = {
-  city: City;
-  offers: Offer[];
-  sortType: sortTypes;
-  loadingStatus: LoadingStatus;
-  selectedMarker: { id: string } | null;
-  authStatus: AuthStatus;
-  author?: Author;
-  currentOffer?: Offer;
-  error: string;
+
+type State = {
+    selectCity: NameCity;
+    places: OfferProps[];
+    selectSort: NameSort;
+    isLoad: boolean;
+    authStat: AuthorizationStatus;
+    isOfferLoading: boolean;
+    offer: OfferAllInfo | null;
+    isReviewsLoad: boolean;
+    comments: Comments;
+    isNearbyLoad: boolean;
+    nearby: OfferProps[];
+}
+const installState: State = {
+  selectCity: NameCity.Amsterdam,
+  places,
+  selectSort: NameSort.Popular,
+  isLoad: false,
+  authStat: AuthorizationStatus.Unknown,
+  isOfferLoading: false,
+  offer: null,
+  isReviewsLoad: false,
+  comments: [],
+  isNearbyLoad: false,
+  nearby: [],
 };
 
-const initialState: StateType = {
-  city: defaultCity,
-  offers: [],
-  sortType: sortTypes.Popular,
-  loadingStatus: LoadingStatus.Success,
-  selectedMarker: null,
-  authStatus: AuthStatus.Unknown,
-  author: undefined,
-  currentOffer: undefined,
-  error: '',
-};
 
-const reducer = createReducer(initialState, (builder) => {
+export const reducer = createReducer(installState, (builder) => {
   builder
-    .addCase(cityChange, (state, { payload }) => {
-      state.city = {
-        ...state.city,
-        name: payload,
-      };
+    .addCase(changeCity, (state, action) => {
+      state.selectCity = action.payload;
     })
-    .addCase(loadOffers, (state, { payload }) => {
-      state.offers = payload;
+    .addCase(changeSort, (state, action) => {
+      state.selectSort = action.payload;
     })
-    .addCase(loadOffer, (state, { payload }) => {
-      state.currentOffer = payload;
+    .addCase(loadPlaces, (state, action) => {
+      state.places = action.payload;
     })
-    .addCase(setCity, (state, { payload }) => {
-      state.city = payload;
+    .addCase(setStatus, (state, action) => {
+      state.isLoad = action.payload;
     })
-    .addCase(setLoadingStatus, (state, { payload }) => {
-      state.loadingStatus = payload;
+    .addCase(requireAuth, (state,action) => {
+      state.authStat = action.payload;
     })
-    .addCase(sortTypeSelect, (state, { payload }) => {
-      state.sortType = payload;
+    .addCase(isOfferLoad, (state, action) => {
+      state.isOfferLoading = action.payload;
     })
-    .addCase(highlightMarker, (state, { payload }) => {
-      state.selectedMarker = payload;
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
     })
-    .addCase(setAuthStatus, (state, { payload }) => {
-      state.authStatus = payload;
+    .addCase(isReviewsLoad, (state, action) => {
+      state.isReviewsLoad = action.payload;
     })
-    .addCase(setAuthor, (state, { payload }) => {
-      state.author = payload;
+    .addCase(setReviews, (state, action) => {
+      state.comments = action.payload;
     })
-    .addCase(addReview, (state, { payload }) => {
-      state.currentOffer?.reviews?.push(payload);
+    .addCase(isNearbyLoad, (state, action) => {
+      state.isNearbyLoad = action.payload;
     })
-    .addCase(setError, (state, { payload }) => {
-      state.error = payload;
+    .addCase(setNearby, (state, action) => {
+      state.nearby = action.payload;
     });
-});
 
-export { reducer };
+});
