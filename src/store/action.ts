@@ -1,18 +1,20 @@
-import {createAction} from '@reduxjs/toolkit';
-import { LoadingStatus, sortTypes } from '../components/constants/all-constants';
-import { Offer } from '../types/offer';
-import { City } from '../types/city';
+import { createAction } from '@reduxjs/toolkit';
+import { AuthorizationStatus, CityName, SortingType } from '../const';
+import { OfferPreviewType } from '../types/offer-preview';
+import { UserType } from '../types/user';
+import { OfferType } from '../types/offer';
+import { ReviewType } from '../types/review';
 
-export const cityChange = createAction<string>('сityChange');
+const changeCity = createAction<CityName>('changeCity');
+const fillOffersList = createAction<OfferPreviewType[]>('fillOffersList');
+const setSortOption = createAction<SortingType>('sort');
+const setOffersLoadingStatus = createAction<boolean>('setOffersLoadingStatus');
+const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
+const setUser = createAction<UserType>('setUser');
+const getFavoritesOffers = createAction<OfferPreviewType[]>('getFavorites');
+const getOffer = createAction<OfferType>('getOffer');
+const getReviews = createAction<ReviewType[]>('getReviews');
+const getNearbyOffers = createAction<OfferPreviewType[]>('getNearbyOffers');
+const addReview = createAction<ReviewType>('addReview');
 
-export const setCity = createAction<City>('setCity');
-
-export const listFilling = createAction('listFilling');
-
-export const sortTypeSelect = createAction<sortTypes>('sortTypeSelect');
-
-export const highlightMarker = createAction<{ id: string } | null>('highlightMarker');
-
-export const loadOffers = createAction<Offer[]>('loadOffers');
-
-export const setLoadingStatus = createAction<LoadingStatus>('setLoadingStatus');
+export {changeCity, fillOffersList, setSortOption, setOffersLoadingStatus, requireAuthorization, setUser, getFavoritesOffers, getOffer, getReviews, getNearbyOffers, addReview};

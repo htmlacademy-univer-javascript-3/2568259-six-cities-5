@@ -1,48 +1,74 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { loadOffers, cityChange, sortTypeSelect, highlightMarker, setLoadingStatus, setCity } from './action';
-import { LoadingStatus, sortTypes } from '../components/constants/all-constants';
-import { City, defaultCity } from '../types/city';
-import { Offer } from '../types/offer';
+import { changeCity, fillOffersList, setSortOption, setOffersLoadingStatus, requireAuthorization, setUser, getFavoritesOffers, getOffer, getReviews, getNearbyOffers, addReview } from './action';
+import { CityName, SortingType, AuthorizationStatus } from '../const';
+import { OfferPreviewType } from '../types/offer-preview';
+import { UserType } from '../types/user';
+import { OfferType } from '../types/offer';
+import { ReviewType } from '../types/review';
 
 type StateType = {
-  city: City;
-  offers: Offer[];
-  sortType: sortTypes;
-  loadingStatus: LoadingStatus;
-  selectedMarker: { id: string } | null;
+  city: CityName;
+  offers: OfferPreviewType[];
+  sortOption: SortingType;
+  isOffersLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+  user: UserType | null;
+  favorites: OfferPreviewType[];
+  offer: OfferType | null;
+  reviews: ReviewType[];
+  nearbyOffers: OfferPreviewType[];
+  review: ReviewType | null;
 };
 
 const initialState: StateType = {
-  city: defaultCity,
+  city: CityName.Paris,
   offers: [],
-  sortType: sortTypes.Popular,
-  loadingStatus: LoadingStatus.Success,
-  selectedMarker: null,
+  sortOption: SortingType.Popular,
+  isOffersLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  user: null,
+  favorites: [],
+  offer: null,
+  reviews: [],
+  nearbyOffers: [],
+  review: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(cityChange, (state, { payload }) => {
-      state.city = {
-        ...state.city,
-        name: payload,
-      };
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
     })
-    .addCase(loadOffers, (state, { payload }) => {
-      state.offers = payload;
+    .addCase(fillOffersList, (state, action) => {
+      state.offers = action.payload;
     })
-    .addCase(setCity, (state, { payload }) => {
-      state.city = payload;
+    .addCase(setSortOption, (state, action) => {
+      state.sortOption = action.payload;
     })
-    .addCase(setLoadingStatus, (state, { payload }) => {
-      state.loadingStatus = payload;
+    .addCase(setOffersLoadingStatus, (state, action) => {
+      state.isOffersLoading = action.payload;
     })
-    .addCase(sortTypeSelect, (state, { payload }) => {
-      state.sortType = payload;
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     })
-    .addCase(highlightMarker, (state, { payload }) => {
-      state.selectedMarker = payload;
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
+    })
+    .addCase(getFavoritesOffers, (state, action) => {
+      state.favorites = action.payload;
+    })
+    .addCase(getOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(getReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(getNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
+    })
+    .addCase(addReview, (state, action) => {
+      state.review = action.payload;
     });
 });
 
-export { reducer };
+export {reducer};

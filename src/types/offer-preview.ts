@@ -1,8 +1,7 @@
 import { CityType } from './city';
 import { LocationType } from './location';
-import { UserType } from './user';
 
-type OfferType = {
+type OfferPreviewType = {
   id: string;
   title: string;
   type: string;
@@ -12,12 +11,7 @@ type OfferType = {
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
-  goods: string[];
-  bedrooms: number;
-  description: string;
-  host: UserType;
-  images: string[];
-  maxAdults: number;
+  previewImage: string;
 };
 
-export type {OfferType};
+export type {OfferPreviewType};
