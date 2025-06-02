@@ -1,78 +1,96 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import Logo from '../logo/logo';
+import { OfferPreviewType } from '../../types/offer-preview';
+import OfferList from '../offer-list/offer-list';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import Map from '../map/map';
+import CityList from '../city-list/city-list';
+import { CityType } from '../../types/city';
+import {useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect, useState } from 'react';
+import Sorting from '../sorting/sorting';
+import { sorting } from '../../utils';
+import { fetchOffers } from '../../store/api-actions';
+import Spinner from '../../spinner/spinner';
 
-import {selectFilteredOffers} from "../../store/selectors";
+type MainPageProps = {
+  cities: CityType[];
+}
 
-import {CardType, MapType} from "../const";
+const MainPage = ({cities}: MainPageProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const offers = useAppSelector((state) => state.offers);
 
-import Map from "../map/map";
-import CitiesList from "../cities-list/cities-list";
-import OffersList from "../offers-list/offers-list";
-import PageHeader from "../page-header/page-header";
+  useEffect(() => {
+    if (offers.length === 0) {
+      dispatch(fetchOffers());
+    }
+  }, [dispatch, offers]);
 
-const MainPage: React.FunctionComponent = () => {
-  const offers = useSelector(selectFilteredOffers);
-  const noOffers = offers.length === 0;
+  const [activeOffer, setActiveOffer] = useState<OfferPreviewType['id'] | null>(null);
+
+  const selectedCityName = useAppSelector((state) => state.city);
+  const filteredOffers = offers.filter((offer) => offer.city.name === selectedCityName);
+  const selectedCityData = cities.find((city) => city.name === selectedCityName) ?? cities[0];
+  const selectedSort = useAppSelector((state) => state.sortOption);
+  const sortedOffers = sorting[selectedSort](filteredOffers);
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+
+  if (isOffersLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
-    <div className={`page page--gray page--main ${noOffers && `page__main--index-empty`}`}>
-      <PageHeader/>
+    <div className="page page--gray page--main">
+      <header className="header">
+        <div className="container">
+          <div className="header__wrapper">
+            <Logo />
+            <nav className="header__nav">
+              <ul className="header__nav-list">
+                <li className="header__nav-item user">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    </div>
+                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__favorite-count">3</span>
+                  </Link>
+                </li>
+                <li className="header__nav-item">
+                  <Link className="header__nav-link" to={AppRoute.Login}>
+                    <span className="header__signout">Sign out</span>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList/>
+            <CityList cities={cities} />
           </section>
         </div>
         <div className="cities">
-          {noOffers
-            ? <div className="cities__places-container cities__places-container--empty container">
-              <section className="cities__no-places">
-                <div className="cities__status-wrapper tabs__content">
-                  <b className="cities__status">No places to stay available</b>
-                  <p className="cities__status-description">
-                    We could not find any property available at the moment in Amsterdam
-                  </p>
-                </div>
+          <div className="cities__places-container container">
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">{filteredOffers.length} places to stay in {selectedCityName}</b>
+
+              <Sorting />
+              <OfferList offers={sortedOffers} setActiveOffer={setActiveOffer} block='cities' />
+            </section>
+            <div className="cities__right-section">
+              <section className="cities__map map">
+                <Map city={selectedCityData} offers={filteredOffers} activeOffer={activeOffer} />
               </section>
-              <div className="cities__right-section"/>
             </div>
-            : <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in Amsterdam</b>
-                <form className="places__sorting" action="#" method="get">
-                  <span className="places__sorting-caption">Sort by</span>
-                  <span className="places__sorting-type" tabIndex={0}>
-                    Popular
-                    <svg className="places__sorting-arrow" width="7" height="4">
-                      <use xlinkHref="#icon-arrow-select"/>
-                    </svg>
-                  </span>
-                  <ul className="places__options places__options--custom places__options--opened">
-                    <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                    <li className="places__option" tabIndex={0}>Price: low to high</li>
-                    <li className="places__option" tabIndex={0}>Price: high to low</li>
-                    <li className="places__option" tabIndex={0}>Top rated first</li>
-                  </ul>
-                </form>
-                <div className="cities__places-list places__list tabs__content">
-                  <OffersList
-                    offers={offers}
-                    type={CardType.CITIES}
-                  />
-                </div>
-              </section>
-              <div className="cities__right-section">
-                <Map
-                  offers={offers}
-                  city={offers[0].city}
-                  type={MapType.CITIES}
-                />
-              </div>
-            </div>
-          }
+          </div>
         </div>
       </main>
     </div>

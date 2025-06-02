@@ -1,7 +1,7 @@
-export type Location = {
+type LocationType = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+};
 
-        latitude: number;
-        longitude: number;
-        zoom: number;
-
-}
+export type {LocationType};

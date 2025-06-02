@@ -1,21 +1,12 @@
-import { City } from './city';
-import { Author } from './review';
+import { OfferPreviewType } from './offer-preview';
+import { UserType } from './user';
 
-export type Offer = {
-    'id': string;
-    'previewImage': string;
-    'title': string;
-    'isPremium': boolean;
-    'isFavorite': boolean;
-    'type': string;
-    'rating': number;
-    'city': City;
-    'numOfBedrooms': number;
-    'numOfGuests': number;
-    'price': number;
-    'masterInf': Author;
-    'nearPlaces': Offers;
+type OfferType = OfferPreviewType & {
+  bedrooms: number;
+  description: string;
+  host: UserType;
+  images: string[];
+  maxAdults: number;
 };
 
-export type Offers = Offer[]
-
+export type {OfferType};
